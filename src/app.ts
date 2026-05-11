@@ -37,7 +37,4 @@ server.register(fastifySwaggerUi, {
 
 export { server }
 
-// server.get('/', (req, reply) => {
-//     return 'Hello world!'
-// })
 
