@@ -13,6 +13,7 @@ import { createTask } from "./routes/tasks/create-task.js";
 import { deleteUser } from "./routes/users/delete-user.js";
 import { getUserById } from "./routes/users/get-user-byId.js";
 import { deleteTask } from "./routes/tasks/delete-task.js";
+import { getTaskById } from "./routes/tasks/get-task-byId.js";
 
 export const server = fastify({
     logger: true
@@ -48,6 +49,7 @@ server.register(getUserById);
 
 server.register(createTask);
 server.register(deleteTask);
+server.register(getTaskById);
 
 
 
