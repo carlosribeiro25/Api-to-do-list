@@ -34,7 +34,7 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
 
         } catch (error) {
 
-        reply.status(400).send({ error: 'Erro ao cadastrar uma tarefa'})
+        reply.status(400).send({ error: 'Ops, erro ao cadastrar uma tarefa'})
 
         }
     })

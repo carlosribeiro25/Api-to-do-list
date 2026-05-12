@@ -12,6 +12,9 @@ export const updateTask: FastifyPluginAsyncZod = async (app) => {
             }),
             body: z.object({
                 title: z.string().min(4, 'Titulo deve ter no minimo 4 caracteres.'),
+                description: z.string(),
+                priority: z.string(),
+                category: z.string(),
                 date: z.string(),
                 time: z.string(),
                 completed: z.boolean(),
@@ -33,7 +36,7 @@ export const updateTask: FastifyPluginAsyncZod = async (app) => {
         .returning()
 
         if(!task.length) {
-            return reply.status(404).send({ error: 'tarefa não encontrada.'})
+            return reply.status(404).send({ error: 'Ops, tarefa não encontrada.'})
         }
         return reply.status(200).send({ message: 'Tarefa atualizada com sucesso.'})
 
