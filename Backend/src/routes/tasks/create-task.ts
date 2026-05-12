@@ -17,7 +17,7 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
                 userId: z.coerce.number()
             }),
             response: {
-                201: z.object({ message: z.string()}),
+                201: z.object({ message: z.string(), taskId: z.coerce.number()}),
                 400: z.object({ error: z.string()})
             }
         }
@@ -28,9 +28,9 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
         try {
         const result =  await db.insert(tasks)
         .values({ title, description, category, priority, completed, date, time, userId })
-        .returning()
+        .returning({ id: tasks.id })
 
-        return reply.status(201).send({ message: 'Tarefa criada com sucesso.'})
+        return reply.status(201).send({ message: 'Tarefa criada com sucesso.', taskId: result[0].id})
 
         } catch (error) {
 
