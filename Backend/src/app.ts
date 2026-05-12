@@ -35,7 +35,6 @@ server.register(fastifySwaggerUi, {
     routePrefix: '/docs',
 })
 
-
 export { server }
 
 
