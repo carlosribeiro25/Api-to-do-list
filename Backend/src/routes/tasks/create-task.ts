@@ -8,9 +8,12 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
         schema: {
             body: z.object({
                 title: z.string().min(4, 'Minimo 4 caracteres'),
+                description: z.string().min(4,'Minimo 4 caracteres'),
+                category: z.string(),
+                priority: z.string(),
+                completed: z.boolean(),
                 date: z.string(),
                 time: z.string(),
-                completed: z.boolean(),
                 userId: z.coerce.number()
             }),
             response: {
@@ -20,12 +23,12 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
         }
     }, async (req, reply) => {
 
-        const { title, date, time, completed, userId } = req.body 
+        const { title, description, category, priority, completed, date, time, userId } = req.body 
 
         try {
         const result =  await db.insert(tasks)
-        .values({ title, date, time, completed, userId})
-        .returning({ id: tasks.id })
+        .values({ title, description, category, priority, completed, date, time, userId })
+        .returning()
 
         return reply.status(201).send({ message: 'Tarefa criada com sucesso.'})
 

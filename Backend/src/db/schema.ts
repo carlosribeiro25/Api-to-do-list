@@ -13,13 +13,14 @@ export const users = pgTable("users", {
 
 export const tasks = pgTable("tasks", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    title: text().notNull(),
+    title: text().unique().notNull(),
+    description: text(),
+    priority: text(),
+    category: text(),
     date: text(),
     time: text(),
     completed: boolean().default(false).notNull(),
     userId: integer().references(() => users.id).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull()
 })
-
-
 
