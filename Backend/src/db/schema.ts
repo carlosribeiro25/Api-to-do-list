@@ -4,7 +4,7 @@ export const users = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: text().notNull(),
     email: text().unique().notNull(),
-    task_id: integer()
+    password: text().notNull()
 })
 
 export const tasks = pgTable("tasks", {

@@ -8,6 +8,13 @@
       "when": 1778543531731,
       "tag": "0000_mean_korg",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778569333071,
+      "tag": "0001_pretty_omega_sentinel",
+      "breakpoints": true
     }
   ]
 }
