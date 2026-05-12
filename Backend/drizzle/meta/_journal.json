@@ -15,6 +15,13 @@
       "when": 1778569333071,
       "tag": "0001_pretty_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778587516192,
+      "tag": "0002_needy_captain_stacy",
+      "breakpoints": true
     }
   ]
 }
