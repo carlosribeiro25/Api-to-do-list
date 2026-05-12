@@ -10,6 +10,9 @@ import { fastifyCors } from '@fastify/cors'
 import { routeDefault } from "./routes/route-default.js";
 import { createUser } from "./routes/users/create-user.js";
 import { createTask } from "./routes/tasks/create-task.js";
+import { deleteUser } from "./routes/users/delete-user.js";
+import { getUserById } from "./routes/users/get-user-byId.js";
+import { deleteTask } from "./routes/tasks/delete-task.js";
 
 export const server = fastify({
     logger: true
@@ -40,7 +43,11 @@ server.register(fastifySwaggerUi, {
 
 server.register(routeDefault);
 server.register(createUser);
+server.register(deleteUser);
+server.register(getUserById);
+
 server.register(createTask);
+server.register(deleteTask);
 
 
 
