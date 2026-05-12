@@ -7,8 +7,11 @@ import {
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { fastifySwagger } from '@fastify/swagger';
 import { fastifyCors } from '@fastify/cors'
+import { routeDefault } from "./routes/route-default.js";
+import { createUser } from "./routes/users/create-user.js";
+import { createTask } from "./routes/tasks/create-task.js";
 
-const server = fastify({
+export const server = fastify({
     logger: true
 }).withTypeProvider<ZodTypeProvider>()
 
@@ -35,7 +38,9 @@ server.register(fastifySwaggerUi, {
     routePrefix: '/docs',
 })
 
-export { server }
+server.register(routeDefault);
+server.register(createUser);
+server.register(createTask);
 
 
 
