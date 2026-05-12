@@ -14,6 +14,9 @@ export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
                 200: z.object({
                     id: z.number(),
                     title: z.string(),
+                    description: z.string().nullable(),
+                    priority: z.string().nullable(),
+                    category: z.string().nullable(),
                     date: z.string().nullable(),
                     time: z.string().nullable(),
                     completed: z.boolean(),
