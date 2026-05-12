@@ -28,7 +28,7 @@ export const deleteUser: FastifyPluginAsyncZod = async (app) =>{
         if(deleteUser.length >  0) {
             return reply.status(200).send({ message: 'Usuario deletado com sucesso.'})
         } else {
-            return reply.status(404).send({ error: 'Usuario não encontrado.'})
+            return reply.status(404).send({ error: 'Ops, usuario não encontrado.'})
         }
     })
 }

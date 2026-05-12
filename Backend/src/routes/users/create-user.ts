@@ -25,7 +25,7 @@ export const createUser: FastifyPluginAsyncZod = async (app) =>{
 
         } catch (error) {
 
-        reply.status(400).send({ error: 'Erro ao cadastrar usuario'})
+        reply.status(400).send({ error: 'Ops, erro ao cadastrar usuario'})
 
         }
     })
