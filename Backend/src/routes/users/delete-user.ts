@@ -1,32 +1,34 @@
 import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
-import z from 'zod';
+import z, { coerce } from 'zod';
 import { db } from '../../db/index.js'
-import { users } from '../../db/schema.js';
+import { users, tasks } from '../../db/schema.js';
+import { eq } from 'drizzle-orm';
 
-export const createUser: FastifyPluginAsyncZod = async (app) =>{
-    app.post('/users', {
+export const deleteUser: FastifyPluginAsyncZod = async (app) =>{
+    app.delete('/users/:id', {
         schema: {
-            body: z.object({
-                name: z.string().min(4, 'Minimo 4 caracteres'),
-                email: z.email(),
-                password: z.string()
-            })
+            params: z.object({
+                id: coerce.number()
+            }),
+            response: {
+                200: z.object({ message: z.string()} ),
+                404: z.object({ error: z.string()} )
+            }
         }
     }, async (req, reply) => {
 
-        const { name, email, password } = req.body 
+        const { id } = req.params 
 
-        try {
-        const result =  await db.insert(users)
-        .values({ name, email, password})
-        .returning({id: users.id})
+        await db.delete(tasks).where(eq(tasks.userId, id))
 
-        return reply.status(201).send({ message: 'Usuario criado com sucesso.', id: result[0].id})
+        const deleteUser =  await db.delete(users)
+        .where(eq(users.id, id))
+        .returning()
 
-        } catch (error) {
-
-        reply.status(400).send({ error: 'Erro ao cadastrar usuario'})
-
+        if(deleteUser.length >  0) {
+            return reply.status(200).send({ message: 'Usuario deletado com sucesso.'})
+        } else {
+            return reply.status(404).send({ error: 'Usuario não encontrado.'})
         }
     })
 }
