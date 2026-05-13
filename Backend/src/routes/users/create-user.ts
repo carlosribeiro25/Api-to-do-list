@@ -6,6 +6,9 @@ import { users } from '../../db/schema.js';
 export const createUser: FastifyPluginAsyncZod = async (app) =>{
     app.post('/users', {
         schema: {
+            tags: ['Usuários'],
+            summary: 'Endpoint para cadastrar um usuário',
+
             body: z.object({
                 name: z.string().min(4, 'Minimo 4 caracteres'),
                 email: z.email(),

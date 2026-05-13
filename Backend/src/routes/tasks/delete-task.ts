@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const deleteTask: FastifyPluginAsyncZod = async (app) =>{
     app.delete('/tasks/:id', {
         schema: {
+            tags: ['Tarefas'],
+            summary: 'Endpoint para deletar uma tarefa',
+            
             params: z.object({
                 id: coerce.number()
             }),

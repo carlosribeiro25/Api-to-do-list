@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const updateUser: FastifyPluginAsyncZod = async (app) => {
     app.patch('/users/:id', {
         schema: {
+            tags: ['Usuários'],
+            summary: 'Endpoint para atualizar um usuário',
+
             params: z.object({
                 id: z.coerce.number().int()
             }),

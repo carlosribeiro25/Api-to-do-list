@@ -1,19 +1,38 @@
 import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
+import z from 'zod';
 
 export const getTasks: FastifyPluginAsyncZod = async (app) =>{
    app.get('/tasks',{
     schema: {
         tags: ['Tarefas'],
         summary: 'Essa rota lista todas as tarefas',
-    }
+
+        response: {
+            200: z.object({ 
+                tasks: z.array(z.object({
+                    id: z.coerce.number(),
+                    title: z.string(),
+                    description: z.string().nullable(),
+                    priority: z.string().nullable(),
+                    category: z.string().nullable(),
+                    date: z.string().nullable(),
+                    time: z.string().nullable(),
+                    userId: z.coerce.number(),
+                    createdAt: z.date()
+                }))
+             }),
+            404: z.object({ error: z.string() })
+        }
+    },
+
    }, async (req, reply) => {
 
     const allTasks = await db.select().from(tasks)
 
     if(!allTasks || allTasks.length === 0) {
-        return reply.status(404).send({ error: 'Recurso nao encontrado'})
+        return reply.status(404).send({ error: 'Recurso nao encontrada'})
     } else {
         return reply.status(200).send({tasks: allTasks});
     }

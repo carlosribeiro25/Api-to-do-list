@@ -6,6 +6,9 @@ import { tasks } from '../../db/schema.js';
 export const createTask: FastifyPluginAsyncZod = async (app) =>{
     app.post('/tasks', {
         schema: {
+            tags: ['Tarefas'],
+            summary: 'Endpoint para criar uma tarefa',
+            
             body: z.object({
                 title: z.string().min(4, 'Minimo 4 caracteres'),
                 description: z.string().min(4,'Minimo 4 caracteres'),
@@ -14,7 +17,7 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
                 completed: z.boolean(),
                 date: z.string(),
                 time: z.string(),
-                userId: z.coerce.number()
+                userId: z.number()
             }),
             response: {
                 201: z.object({ message: z.string(), taskId: z.coerce.number()}),

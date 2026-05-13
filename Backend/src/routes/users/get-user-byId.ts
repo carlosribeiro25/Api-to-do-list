@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const getUserById: FastifyPluginAsyncZod = async (app) =>{
     app.get('/users/:id', {
         schema: {
+            tags: ['Usuários'],
+            summary: 'Endpoint para selecionar um usuário por ID',
+
             params: z.object({
                 id: coerce.number()
             }),

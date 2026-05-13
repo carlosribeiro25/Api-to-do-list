@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const updateTask: FastifyPluginAsyncZod = async (app) => {
     app.patch('/tasks/:id', {
         schema: {
+            tags: ['Tarefas'],
+            summary: 'Endpoint para atualizar uma tarefa por ID',
+
             params: z.object({
                 id: z.coerce.number().int()
             }),
@@ -18,7 +21,7 @@ export const updateTask: FastifyPluginAsyncZod = async (app) => {
                 date: z.string(),
                 time: z.string(),
                 completed: z.boolean(),
-                userId: z.coerce.number(),
+                userId: z.number(),
             }),
             response: {
                 200: z.object({ message: z.string()} ),

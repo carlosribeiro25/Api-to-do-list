@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const deleteUser: FastifyPluginAsyncZod = async (app) =>{
     app.delete('/users/:id', {
         schema: {
+            tags: ['Usuários'],
+            summary: 'Endpoint para deletar um usuário',
+
             params: z.object({
                 id: coerce.number()
             }),

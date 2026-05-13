@@ -6,7 +6,7 @@ export const getUsers: FastifyPluginAsyncZod = async (app) =>{
    app.get('/users',{
     schema: {
         tags: ['Usuários'],
-        summary: 'Essa rota lista todas os usuarios.',
+        summary: 'Essa rota lista todas os usuários.',
     }
    }, async (req, reply) => {
 

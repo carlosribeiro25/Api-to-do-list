@@ -7,6 +7,9 @@ import { eq } from 'drizzle-orm';
 export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
     app.get('/tasks/:id', {
         schema: {
+            tags: ['Tarefas'],
+            summary: 'Endpoint para selecionar um tarefa por ID',
+            
             params: z.object({
                 id: z.coerce.number().int()
             }),
@@ -35,7 +38,7 @@ export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
         .where(eq(tasks.id, id) )
         
         if(!taskId) {
-            return reply.status(404).send({ error: 'Recurso nao encontrado'})
+            return reply.status(404).send({ error: 'Tarefa nao encontrado'})
         } 
             return  taskId;
     })
