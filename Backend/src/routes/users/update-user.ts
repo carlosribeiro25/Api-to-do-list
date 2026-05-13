@@ -17,8 +17,6 @@ export const updateUser: FastifyPluginAsyncZod = async (app) => {
                 name: z.string().optional(),
                 email: z.email().optional(),
                 password: z.string().optional(),
-                role: z.enum(["admin", "user"]).optional(),
-                createAt: z.string().optional()
             }),
             response: {
                 200: z.object({ message: z.string()} ),
@@ -29,13 +27,13 @@ export const updateUser: FastifyPluginAsyncZod = async (app) => {
         const  {id}  = req.params
         const body = req.body
 
-        const task = await db
+        const updateUser = await db
         .update(users)
         .set(body)
         .where(eq(users.id , id))
         .returning()
 
-        if(!task.length) {
+        if(!updateUser.length) {
             return reply.status(404).send({ error: 'Ops, usuario não encontrada.'})
         }
         return reply.status(200).send({ message: 'Usuario atualizada com sucesso.'})
