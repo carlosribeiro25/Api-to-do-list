@@ -12,8 +12,8 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
             body: z.object({
                 title: z.string().min(4, 'Minimo 4 caracteres'),
                 description: z.string().min(4,'Minimo 4 caracteres'),
-                category: z.string(),
-                priority: z.string(),
+                category: z.enum(['Estudo', 'Saude', 'Trabalho', 'Pessoal', 'Outro']),
+                priority: z.enum(['Alta', 'Media', 'Baixa']),
                 completed: z.boolean(),
                 date: z.string(),
                 time: z.string(),

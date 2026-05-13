@@ -7,12 +7,12 @@ export const createUser: FastifyPluginAsyncZod = async (app) =>{
     app.post('/users', {
         schema: {
             tags: ['Usuários'],
-            summary: 'Endpoint para cadastrar um usuário',
+            summary: 'Endpoint para cadastrar um usuario',
 
             body: z.object({
                 name: z.string().min(4, 'Minimo 4 caracteres'),
                 email: z.email(),
-                password: z.string()
+                password: z.string(),
             })
         }
     }, async (req, reply) => {
