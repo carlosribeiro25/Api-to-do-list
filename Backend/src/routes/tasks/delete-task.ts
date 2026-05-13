@@ -26,7 +26,7 @@ export const deleteTask: FastifyPluginAsyncZod = async (app) =>{
         if(deleteTask.length >  0) {
             return reply.status(200).send({ message: 'Tarefa deletada com sucesso.'})
         } else {
-            return reply.status(404).send({ error: 'Ops, tarefa não encontrada.'})
+            return reply.status(404).send({ error: 'Recurso nao encontrado'})
         }
     })
 }

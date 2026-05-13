@@ -32,10 +32,10 @@ export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
 
         const [ taskId ] =  await db.select()
         .from(tasks)
-        .where(eq(tasks.id, id))
+        .where(eq(tasks.id, id) )
         
         if(!taskId) {
-            return reply.status(404).send({ error: 'Ops, tarefa não encontrada.'})
+            return reply.status(404).send({ error: 'Recurso nao encontrado'})
         } 
             return  taskId;
     })

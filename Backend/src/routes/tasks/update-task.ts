@@ -36,7 +36,7 @@ export const updateTask: FastifyPluginAsyncZod = async (app) => {
         .returning()
 
         if(!task.length) {
-            return reply.status(404).send({ error: 'Ops, tarefa não encontrada.'})
+            return reply.status(404).send({ error: 'Recurso nao encontrado'})
         }
         return reply.status(200).send({ message: 'Tarefa atualizada com sucesso.'})
 

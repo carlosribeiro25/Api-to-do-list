@@ -30,7 +30,7 @@ export const getUserById: FastifyPluginAsyncZod = async (app) =>{
         
 
         if(!getUserById) {
-            return reply.status(404).send({ error: 'Ops, usuario não encontrado.'})
+            return reply.status(404).send({ error: 'Recurso nao encontrado.'})
 
         } 
             return  getUserById
