@@ -13,7 +13,7 @@ export const users = pgTable("users", {
 
 export const tasks = pgTable("tasks", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    title: text().unique().notNull(),
+    title: text().notNull(),
     description: text(),
     priority: text(),
     category: text(),

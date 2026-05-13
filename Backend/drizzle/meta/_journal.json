@@ -36,6 +36,13 @@
       "when": 1778608307392,
       "tag": "0004_productive_cyclops",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1778686592057,
+      "tag": "0005_square_purifiers",
+      "breakpoints": true
     }
   ]
 }
