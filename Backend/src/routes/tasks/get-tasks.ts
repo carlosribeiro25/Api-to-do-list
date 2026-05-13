@@ -1,39 +1,22 @@
 import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
-import z from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
-import { eq } from 'drizzle-orm';
 
-export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
-    app.get('/tasks/:id', {
-        schema: {
-            params: z.object({
-                id: z.coerce.number().int()
-            }),
-            response: {
-                200: z.object({
-                    id: z.number(),
-                    title: z.string(),
-                    date: z.string().nullable(),
-                    time: z.string().nullable(),
-                    completed: z.boolean(),
-                    createdAt: z.date(),
-                    userId: z.number()
-                }),
-                404: z.object({ error: z.string() })
-            }
-        }
-    }, async (req, reply) => {
+export const getTasks: FastifyPluginAsyncZod = async (app) =>{
+   app.get('/tasks',{
+    schema: {
+        tags: ['Tarefas'],
+        summary: 'Essa rota lista todas as tarefas',
+    }
+   }, async (req, reply) => {
 
-        const { id } = req.params 
+    const allTasks = await db.select().from(tasks)
 
-        const [ taskId ] =  await db.select()
-        .from(tasks)
-        .where(eq(tasks.id, id))
-        
-        if(!taskId) {
-            return reply.status(404).send({ error: 'Tarefa não encontrado.'})
-        } 
-            return  taskId;
-    })
+    if(!allTasks || allTasks.length === 0) {
+        return reply.status(404).send({ error: 'Recurso nao encontrado'})
+    } else {
+        return reply.status(200).send({tasks: allTasks});
+    }
+
+   })
 }

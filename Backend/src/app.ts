@@ -16,6 +16,8 @@ import { deleteTask } from "./routes/tasks/delete-task.js";
 import { getTaskById } from "./routes/tasks/get-task-byId.js";
 import { updateTask } from "./routes/tasks/update-task.js";
 import { updateUser } from "./routes/users/update-user.js";
+import { getTasks } from "./routes/tasks/get-tasks.js";
+import { getUsers } from "./routes/users/get-user.js";
 
 export const server = fastify({
     logger: true
@@ -45,14 +47,16 @@ server.register(fastifySwaggerUi, {
 })
 
 server.register(routeDefault);
+server.register(getUsers);
+server.register(getUserById);
 server.register(createUser);
 server.register(deleteUser);
-server.register(getUserById);
 server.register(updateUser);
 
+server.register(getTasks);
+server.register(getTaskById);
 server.register(createTask);
 server.register(deleteTask);
-server.register(getTaskById);
 server.register(updateTask)
 
 
