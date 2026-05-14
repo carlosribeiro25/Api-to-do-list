@@ -19,12 +19,12 @@ export const updateTask: FastifyPluginAsyncZod = async (app) => {
             }),
             body: z.object({
                 title: z.string().min(4, 'Titulo deve ter no minimo 4 caracteres.'),
-                description: z.string(),
+                description: z.string().min(4, 'Titulo deve ter no minimo 4 caracteres.'),
                 priority: z.enum(['alta', 'media', 'baixa']),
                 category: z.enum(['estudo', 'saude', 'trabalho', 'pessoal', 'outro']),
                 date: z.string(),
                 time: z.string(),
-                completed: z.boolean(),
+                status: z.enum(['pendente', 'concluido', 'em_andamento']),
                 userId: z.number(),
             }),
             response: {
