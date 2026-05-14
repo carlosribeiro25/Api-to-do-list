@@ -19,6 +19,7 @@ import { updateUser } from "./routes/users/update-user.js";
 import { getTasks } from "./routes/tasks/get-tasks.js";
 import { getUsers } from "./routes/users/get-user.js";
 import { filterTask } from "./routes/tasks/get-filters.js";
+import { routeLogin } from "./login.js";
 
 export const server = fastify({
     logger: true
@@ -47,6 +48,7 @@ server.register(fastifySwaggerUi, {
     routePrefix: '/docs',
 })
 
+server.register(routeLogin)
 server.register(routeDefault);
 server.register(getUsers);
 server.register(getUserById);
