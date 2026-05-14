@@ -1,1 +1,0 @@
-ALTER TABLE "tasks" DROP CONSTRAINT "tasks_title_unique";

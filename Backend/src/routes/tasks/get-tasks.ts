@@ -23,6 +23,7 @@ export const getTasks: FastifyPluginAsyncZod = async (app) =>{
                     category: z.string().nullable(),
                     date: z.string().nullable(),
                     time: z.string().nullable(),
+                    status: z.string().nullable(),
                     userId: z.coerce.number(),
                     createdAt: z.date()
                 }))

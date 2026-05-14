@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1778543531731,
-      "tag": "0000_mean_korg",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1778569333071,
-      "tag": "0001_pretty_omega_sentinel",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1778587516192,
-      "tag": "0002_needy_captain_stacy",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1778606764803,
-      "tag": "0003_brainy_captain_britain",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1778608307392,
-      "tag": "0004_productive_cyclops",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1778686592057,
-      "tag": "0005_square_purifiers",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1778690727978,
-      "tag": "0006_certain_ser_duncan",
+      "when": 1778785208785,
+      "tag": "0000_tearful_iron_patriot",
       "breakpoints": true
     }
   ]

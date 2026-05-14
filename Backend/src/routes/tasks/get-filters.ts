@@ -14,20 +14,20 @@ export const filterTask: FastifyPluginAsyncZod = async (app) => {
             tags: ['Tarefas'],
             summary: 'Filtrar tarefas por categoria, prioridade, data',
             querystring: z.object({
-                category: z.enum(['Estudo', 'Saude', 'Trabalho', 'Pessoal', 'Outro']).optional(),
-                priority: z.enum(['Alta', 'Media', 'Baixa']).optional(),
+                category: z.enum(['estudo', 'saude', 'trabalho', 'pessoal', 'outro']).optional(),
+                priority: z.enum(['alta', 'media', 'baixa']).optional(),
                 date: z.string().optional(),
-                completed: z.string().transform(v => v === 'true').pipe(z.boolean()).optional()
+                status: z.enum(['pendente', 'concluido', 'em_andamento']).optional()
             })
         }
     }, async (req, reply) => {
-        const { category, priority, date, completed } = req.query
+        const { category, priority, date, status } = req.query
 
         const filters: SQL[] = []
         if (category) filters.push(eq(tasks.category, category))
         if (priority) filters.push(eq(tasks.priority, priority))
         if (date)     filters.push(eq(tasks.date, date))
-        if (completed)     filters.push(eq(tasks.completed, completed))
+        if (status)     filters.push(eq(tasks.status, status))
 
         const resultfilter = await db
             .select()

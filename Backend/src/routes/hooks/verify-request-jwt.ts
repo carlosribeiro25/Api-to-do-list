@@ -1,6 +1,8 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import jwt  from "jsonwebtoken";
 
+
+
 export async function checkRequestJwt(request: FastifyRequest, reply: FastifyReply) {
     const authHeader  = request.headers.authorization
 
