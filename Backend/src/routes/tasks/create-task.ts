@@ -16,9 +16,9 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
             body: z.object({
                 title: z.string().min(4, 'Minimo 4 caracteres'),
                 description: z.string().min(4,'Minimo 4 caracteres'),
-                category: z.enum(['Estudo', 'Saude', 'Trabalho', 'Pessoal', 'Outro']),
-                priority: z.enum(['Alta', 'Media', 'Baixa']),
-                completed: z.boolean(),
+                category: z.enum(['estudo', 'saude', 'trabalho', 'pessoal', 'outro']),
+                priority: z.enum(['alta', 'media', 'baixa']),
+                status: z.enum(['pendente', 'concluido', 'em_andamento']),
                 date: z.string(),
                 time: z.string(),
                 userId: z.number()
@@ -30,11 +30,11 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
         }
     }, async (req, reply) => {
 
-        const { title, description, category, priority, completed, date, time, userId } = req.body 
+        const { title, description, category, priority, status, date, time, userId } = req.body 
 
         try {
         const result =  await db.insert(tasks)
-        .values({ title, description, category, priority, completed, date, time, userId })
+        .values({ title, description, category, priority, status, date, time, userId })
         .returning({ id: tasks.id })
 
         return reply.status(201).send({ message: 'Tarefa criada com sucesso.', taskId: result[0].id})
