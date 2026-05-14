@@ -3,9 +3,13 @@ import { db } from '../../db/index.js';
 import z from 'zod';
 import { tasks } from '../../db/schema.js';
 import { eq } from 'drizzle-orm';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const updateTask: FastifyPluginAsyncZod = async (app) => {
     app.patch('/tasks/:id', {
+        preHandler: [
+                checkRequestJwt
+            ],
         schema: {
             tags: ['Tarefas'],
             summary: 'Endpoint para atualizar uma tarefa por ID',

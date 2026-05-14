@@ -42,7 +42,7 @@ export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
         }
 
         if(!process.env.JWT_SECRET) {
-            throw new Error ('JWT_SECRET deve ser cetado')
+            throw new Error('JWT_SECRET deve ser cetado')
         }
 
         const token = jwt.sign({ sub: user.id, role: user.role }, process.env.JWT_SECRET)

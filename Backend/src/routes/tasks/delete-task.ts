@@ -3,9 +3,13 @@ import z, { coerce } from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import { eq } from 'drizzle-orm';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const deleteTask: FastifyPluginAsyncZod = async (app) =>{
     app.delete('/tasks/:id', {
+        preHandler: [
+            checkRequestJwt
+        ],
         schema: {
             tags: ['Tarefas'],
             summary: 'Endpoint para deletar uma tarefa',

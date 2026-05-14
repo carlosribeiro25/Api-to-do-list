@@ -3,9 +3,13 @@ import z from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import { eq } from 'drizzle-orm';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
     app.get('/tasks/:id', {
+        preHandler: [
+            checkRequestJwt
+        ],
         schema: {
             tags: ['Tarefas'],
             summary: 'Endpoint para selecionar um tarefa por ID',

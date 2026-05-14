@@ -3,9 +3,13 @@ import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import { and, eq, SQL } from 'drizzle-orm'
 import z from 'zod';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const filterTask: FastifyPluginAsyncZod = async (app) => {
     app.get('/tasks/filter', {
+        preHandler: [
+            checkRequestJwt
+        ],
         schema: {
             tags: ['Tarefas'],
             summary: 'Filtrar tarefas por categoria, prioridade, data',

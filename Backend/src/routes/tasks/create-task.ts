@@ -2,9 +2,13 @@ import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import z from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const createTask: FastifyPluginAsyncZod = async (app) =>{
     app.post('/tasks', {
+        preHandler: [
+            checkRequestJwt
+        ],
         schema: {
             tags: ['Tarefas'],
             summary: 'Endpoint para criar uma tarefa',

@@ -2,9 +2,13 @@ import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import z from 'zod';
+import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const getTasks: FastifyPluginAsyncZod = async (app) =>{
    app.get('/tasks',{
+    preHandler: [
+        checkRequestJwt
+    ],
     schema: {
         tags: ['Tarefas'],
         summary: 'Essa rota lista todas as tarefas',
