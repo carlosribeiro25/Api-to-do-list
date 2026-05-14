@@ -13,7 +13,11 @@ export const createUser: FastifyPluginAsyncZod = async (app) =>{
                 name: z.string().min(4, 'Minimo 4 caracteres'),
                 email: z.email(),
                 password: z.string(),
-            })
+            }),
+            response: {
+                201: z.object({ message: z.string(), id: z.number()}),
+                400: z.object({ error: z.string()})
+            }
         }
     }, async (req, reply) => {
 

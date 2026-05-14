@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm'
 import { users } from '.././src/db/schema.js';
 import { db } from './db/index.js';
 import { verify } from 'argon2';
+import jwt  from 'jsonwebtoken'
 
 export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
     app.post('/login', {
@@ -14,7 +15,11 @@ export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
             body: z.object({
                 email: z.email(),
                 password: z.string(),
-            })
+            }),
+            response: {
+                200: z.object({ token: z.string()}),
+                400: z.object({ message: z.string()})
+            }
         }
     }, async (req, reply) => {
 
@@ -36,6 +41,12 @@ export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
             return reply.status(400).send({ message: 'Credenciais invalidas'})
         }
 
-        return reply.status(200).send({ message: 'Autenticado!'})
+        if(!process.env.JWT_SECRET) {
+            throw new Error ('JWT_SECRET deve ser cetado')
+        }
+
+        const token = jwt.sign({ sub: user.id, role: user.role }, process.env.JWT_SECRET)
+
+        return reply.status(200).send({ token })
     })
 }
