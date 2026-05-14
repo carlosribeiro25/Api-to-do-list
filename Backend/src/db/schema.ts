@@ -1,4 +1,5 @@
-import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { check, integer, pgEnum, pgTable , text, timestamp } from "drizzle-orm/pg-core";
+import { sql } from 'drizzle-orm';
 
 export const roleEnum = pgEnum('role', ['admin', 'user'])
 export const priorityEnum = pgEnum('priority', ['alta', 'media', 'baixa'])
@@ -12,7 +13,9 @@ export const users = pgTable("users", {
     password: text("password").notNull(),
     role: roleEnum("role").default('user'),
     createdAt: timestamp('created_at').defaultNow().notNull()
-})
+}, (t) => [
+    check('users_name_min_length', sql`char_length(${t.name}) >= 4`)
+])
 
 export const tasks = pgTable("tasks", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -25,5 +28,8 @@ export const tasks = pgTable("tasks", {
     status: statusEnum("status"),
     userId: integer("userId").references(() => users.id).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull()
-})
+}, (t) => [
+    check('tasks_title_min_length', sql`char_length(${t.title}) >= 4`),
+    check('tasks_description_min_length', sql`${t.description} IS NULL OR char_length(${t.description}) >= 4`)
+])
 
