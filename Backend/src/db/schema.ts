@@ -1,8 +1,9 @@
 import { boolean, integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum('role', ['admin', 'user'])
-export const priorityEnum = pgEnum('priority', ['Alta', 'Media', 'Baixa'])
-export const categoryEnum = pgEnum('category', ['Estudo', 'Saude', 'Trabalho', 'Pessoal', 'Outro'])
+export const priorityEnum = pgEnum('priority', ['alta', 'media', 'baixa'])
+export const categoryEnum = pgEnum('category', ['estudo', 'saude', 'trabalho', 'pessoal', 'outro'])
+export const statusEnum = pgEnum('status', ['pendente', 'concluido', 'em_andamento'])
 
 export const users = pgTable("users", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -21,7 +22,7 @@ export const tasks = pgTable("tasks", {
     category: categoryEnum("category"),
     date: text("date"),
     time: text("time"),
-    completed: boolean("completed").default(false).notNull(),
+    status: statusEnum("status"),
     userId: integer("userId").references(() => users.id).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull()
 })
