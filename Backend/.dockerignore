@@ -1,6 +1,27 @@
-.env
-node_modules
+# Dependencies
+node_modules/
+
+# Environment variables
+.env*
+
+# Build
+dist/
+
+# Tests
+tests/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# VSCode
+.vscode/
+
+# Local files
 requisicoes.http
 Requisitos.txt
 imple-filter-front.txt
-tests/

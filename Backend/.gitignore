@@ -4,3 +4,4 @@ requisicoes.http
 Requisitos.txt
 imple-filter-front.txt
 tests/
+dist/
