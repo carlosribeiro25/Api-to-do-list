@@ -23,7 +23,7 @@ export const deleteTask: FastifyPluginAsyncZod = async (app) =>{
             }
         }
     }, async (req, reply) => {
-
+        
         const { id } = req.params 
 
         const deleteTask =  await db.delete(tasks)

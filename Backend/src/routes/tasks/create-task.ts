@@ -3,12 +3,11 @@ import z from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
-import { reqAuthUser } from '../../utils/autenticateUser.js';
 
 export const createTask: FastifyPluginAsyncZod = async (app) =>{
     app.post('/tasks', {
         preHandler: [
-            checkRequestJwt
+            checkRequestJwt,           
         ],
         schema: {
             tags: ['Tarefas'],
@@ -30,10 +29,7 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
             }
         }
     }, async (req, reply) => {
-        const user = reqAuthUser(req)
 
-        console.log(user)
-        
         const { title, description, category, priority, status, date, time, userId } = req.body 
 
         try {

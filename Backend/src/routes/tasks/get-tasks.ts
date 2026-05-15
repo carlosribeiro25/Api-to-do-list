@@ -3,6 +3,7 @@ import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import z from 'zod';
 import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
+import { reqAuthUser } from '../../utils/autenticateUser.js';
 
 export const getTasks: FastifyPluginAsyncZod = async (app) =>{
    app.get('/tasks',{
@@ -33,6 +34,10 @@ export const getTasks: FastifyPluginAsyncZod = async (app) =>{
     },
 
    }, async (req, reply) => {
+
+    const user = reqAuthUser(req)
+
+    console.log(user)
 
     const allTasks = await db.select().from(tasks)
 
