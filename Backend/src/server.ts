@@ -1,5 +1,7 @@
 import { server } from './app.js'
 
-server.listen({ port: 3000, host: '0.0.0.0' }).then(() => {
-    console.log("Http server running on http://localhost:3000")
+const port = Number(process.env.PORT) || 3000
+
+server.listen({ port, host: '0.0.0.0' }).then(() => {
+    console.log(`Http server running on port ${port}`)
 })

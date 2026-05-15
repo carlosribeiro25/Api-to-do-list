@@ -1,0 +1,6 @@
+.env
+node_modules
+requisicoes.http
+Requisitos.txt
+imple-filter-front.txt
+tests/
