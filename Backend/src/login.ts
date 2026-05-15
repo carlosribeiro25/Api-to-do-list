@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import z from 'zod';
 import { eq } from 'drizzle-orm'
-import { users } from '.././src/db/schema.js';
+import { users } from './db/schema.js';
 import { db } from './db/index.js';
 import { verify } from 'argon2';
 import jwt  from 'jsonwebtoken'
