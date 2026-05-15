@@ -29,7 +29,7 @@ export const updateUser: FastifyPluginAsyncZod = async (app) => {
 
         const updateUser = await db
         .update(users)
-        .set(body)
+        .set({ ...body, ...(body.email && { email: body.email.toLowerCase() }) })
         .where(eq(users.id , id))
         .returning()
 

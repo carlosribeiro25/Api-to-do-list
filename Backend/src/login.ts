@@ -27,7 +27,7 @@ export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
         const result = await db
         .select()
         .from(users)
-        .where(eq(users.email, email))
+        .where(eq(users.email, email.toLowerCase()))
 
         if(result.length === 0) {
             return reply.status(400).send({ message: 'Credenciais invalidas'})

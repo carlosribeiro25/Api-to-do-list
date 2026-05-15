@@ -1,9 +1,13 @@
 import { fakerPT_BR as faker} from '@faker-js/faker';
 import { db } from '../db/index.js';
 import { tasks } from '../db/schema.js';
+import jwt from 'jsonwebtoken';
+import { makeUser } from './make-user.js';
 
-export async function makeTask() {
-    const createTask = await db.insert(tasks).values([
+export async function makeTask(): Promise<{ token: string; taskId: number }> {
+    const { userId } = await makeUser()
+
+    const result = await db.insert(tasks).values([
         {
             title: faker.lorem.words(3),
             description: faker.lorem.sentence(),
@@ -12,10 +16,16 @@ export async function makeTask() {
             date: faker.date.future().toISOString().split('T')[0],
             time: faker.date.anytime().toLocaleTimeString().split(' ')[0],
             status: faker.helpers.arrayElement(['pendente', 'concluido', 'em_andamento'] as const),
-            userId: 1
+            userId
         }
-    ]).returning()
+    ]).returning({ id: tasks.id })
 
-    console.log(`Tarefa inserida:`, createTask)
+    if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET deve ser definido')
+    }
+
+    const token = jwt.sign({ sub: userId, role: 'user' }, process.env.JWT_SECRET)
+
+    return { token, taskId: result[0].id }
 }
 

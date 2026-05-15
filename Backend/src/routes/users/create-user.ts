@@ -25,7 +25,7 @@ export const createUser: FastifyPluginAsyncZod = async (app) =>{
 
         try {
         const result =  await db.insert(users)
-        .values({ name, email, password})
+        .values({ name, email: email.toLowerCase(), password})
         .returning({id: users.id})
 
         return reply.status(201).send({ message: 'Usuario criado com sucesso.', id: result[0].id})

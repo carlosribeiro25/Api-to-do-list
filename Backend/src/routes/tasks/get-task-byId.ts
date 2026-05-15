@@ -42,7 +42,7 @@ export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
         .where(eq(tasks.id, id) )
         
         if(!taskId) {
-            return reply.status(404).send({ error: 'Tarefa nao encontrado'})
+            return reply.status(404).send({ error: 'Tarefa nao encontrada'})
         } 
             return  taskId;
     })

@@ -42,7 +42,7 @@ export const getTasks: FastifyPluginAsyncZod = async (app) =>{
     const allTasks = await db.select().from(tasks)
 
     if(!allTasks || allTasks.length === 0) {
-        return reply.status(404).send({ error: 'Recurso nao encontrada'})
+        return reply.status(404).send({ error: 'Recurso nao encontrado'})
     } else {
         return reply.status(200).send({tasks: allTasks});
     }
