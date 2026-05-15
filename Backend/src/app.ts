@@ -29,8 +29,12 @@ server.setValidatorCompiler(validatorCompiler);
 server.setSerializerCompiler(serializerCompiler);
 
 server.register(fastifyCors, {
-    origin: true,
-    methods: ["GET", "POST", "PATCH", "DELETE"]
+    origin: [
+        'http://localhost:5173'
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ['Content-Type', 'Authorization']
 })
 
 server.register(fastifySwagger, {

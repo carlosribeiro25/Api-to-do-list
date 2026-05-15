@@ -2,6 +2,7 @@ import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import z from 'zod';
 import { db } from '../../db/index.js'
 import { users } from '../../db/schema.js';
+import { hash } from 'argon2';
 
 export const createUser: FastifyPluginAsyncZod = async (app) =>{
     app.post('/users', {
@@ -24,8 +25,10 @@ export const createUser: FastifyPluginAsyncZod = async (app) =>{
         const { name, email, password } = req.body 
 
         try {
+        const passwordHash = await hash(password)
+
         const result =  await db.insert(users)
-        .values({ name, email: email.toLowerCase(), password})
+        .values({ name, email: email.toLowerCase(), password: passwordHash})
         .returning({id: users.id})
 
         return reply.status(201).send({ message: 'Usuario criado com sucesso.', id: result[0].id})

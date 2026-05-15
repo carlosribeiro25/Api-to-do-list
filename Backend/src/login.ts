@@ -35,9 +35,14 @@ export const routeLogin: FastifyPluginAsyncZod = async (app) =>{
         
         const user = result[0]
 
-        const getPassword = await verify(user.password, password)
+        let getPassword: boolean
+        try {
+            getPassword = await verify(user.password, password)
+        } catch {
+            return reply.status(400).send({ message: 'Credenciais invalidas'})
+        }
 
-         if(!getPassword) {
+        if(!getPassword) {
             return reply.status(400).send({ message: 'Credenciais invalidas'})
         }
 
