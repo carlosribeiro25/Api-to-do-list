@@ -1,7 +1,10 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import jwt  from "jsonwebtoken";
 
-
+type JWTpayload = {
+    sub: string
+    role: 'admin' | 'user'
+}
 
 export async function checkRequestJwt(request: FastifyRequest, reply: FastifyReply) {
     const authHeader  = request.headers.authorization
@@ -19,9 +22,9 @@ export async function checkRequestJwt(request: FastifyRequest, reply: FastifyRep
     }
 
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        const payload = jwt.verify(token, process.env.JWT_SECRET ) as JWTpayload
 
-        console.log(payload)
+        request.user = payload
     } catch {
         return reply.status(401).send('Nao autorizado')
 

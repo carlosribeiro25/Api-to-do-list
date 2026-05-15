@@ -9,7 +9,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx --env-file .env src/db/seed.ts"
+    "db:seed": "tsx --env-file .env src/db/seed.ts",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -33,9 +34,12 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.7.0",
     "@types/pg": "^8.20.0",
+    "@types/supertest": "^7.2.0",
     "drizzle-kit": "^0.31.10",
     "pg": "^8.20.0",
+    "supertest": "^7.2.2",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
   }
 }
