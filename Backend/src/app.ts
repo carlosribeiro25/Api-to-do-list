@@ -32,7 +32,7 @@ server.setSerializerCompiler(serializerCompiler);
 server.register(fastifyCors, {
     origin: [
         'http://localhost:5173',
-        'https://dailytasks-woad.vercel.app'
+        'https://dailytasks-eight.vercel.app'
     ],
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE"],
