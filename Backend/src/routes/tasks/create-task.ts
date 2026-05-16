@@ -15,26 +15,31 @@ export const createTask: FastifyPluginAsyncZod = async (app) =>{
             
             body: z.object({
                 title: z.string().min(4, 'Minimo 4 caracteres'),
-                description: z.string().min(4,'Minimo 4 caracteres'),
+                description: z.string().optional(),
                 category: z.enum(['estudo', 'saude', 'trabalho', 'pessoal', 'outro']),
                 priority: z.enum(['alta', 'media', 'baixa']),
                 status: z.enum(['pendente', 'concluido', 'em_andamento']),
                 date: z.string(),
                 time: z.string(),
-                userId: z.number()
             }),
             response: {
                 201: z.object({ message: z.string(), taskId: z.coerce.number()}),
-                400: z.object({ error: z.string()})
+                400: z.object({ error: z.string()}),
+                401: z.object({ error: z.string()}),
             }
         }
     }, async (req, reply) => {
+        const userId = req.user?.sub
 
-        const { title, description, category, priority, status, date, time, userId } = req.body 
+        if(!userId) {
+            return reply.status(401).send({ error: 'Autenticacao invalida' })
+        }
+
+        const { title, description, category, priority, status, date, time } = req.body 
 
         try {
         const result =  await db.insert(tasks)
-        .values({ title, description, category, priority, status, date, time, userId })
+        .values({ title, description, category, priority, status, date, time, userId: Number(userId) })
         .returning({ id: tasks.id })
 
         return reply.status(201).send({ message: 'Tarefa criada com sucesso.', taskId: result[0].id})

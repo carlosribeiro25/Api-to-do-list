@@ -1,5 +1,4 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import jwt from "jsonwebtoken";
 import { reqAuthUser } from "../../utils/autenticateUser.js";
 
 type JWTpayload = {

@@ -2,7 +2,7 @@ import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
 import z from 'zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 
 export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
@@ -28,18 +28,23 @@ export const getTaskById: FastifyPluginAsyncZod = async (app) =>{
                     time: z.string().nullable(),
                     status: z.string().nullable(),
                     createdAt: z.date(),
-                    userId: z.number()
                 }),
-                404: z.object({ error: z.string() })
+                404: z.object({ error: z.string() }),
+                401: z.object({ error: z.string() })
             }
         }
     }, async (req, reply) => {
 
-        const { id } = req.params 
+        const { id } = req.params
+        const userId = req.user?.sub
+
+        if (!userId) {
+            return reply.status(401).send({ error: 'Autenticacao invalida' })
+        }
 
         const [ taskId ] =  await db.select()
         .from(tasks)
-        .where(eq(tasks.id, id) )
+        .where(and(eq(tasks.id, id), eq(tasks.userId, Number(userId))))
         
         if(!taskId) {
             return reply.status(404).send({ error: 'Tarefa nao encontrada'})

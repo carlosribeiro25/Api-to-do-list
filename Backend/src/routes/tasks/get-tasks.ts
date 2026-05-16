@@ -1,10 +1,10 @@
-import { FastifyPluginAsyncZod} from 'fastify-type-provider-zod';
+import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { db } from '../../db/index.js'
 import { tasks } from '../../db/schema.js';
 import z from 'zod';
 import { checkRequestJwt } from '../hooks/verify-request-jwt.js';
 import { reqAuthUser } from '../../utils/autenticateUser.js';
-
+import { eq } from 'drizzle-orm'
 export const getTasks: FastifyPluginAsyncZod = async (app) =>{
    app.get('/tasks',{
     preHandler: [
@@ -25,7 +25,6 @@ export const getTasks: FastifyPluginAsyncZod = async (app) =>{
                     date: z.string().nullable(),
                     time: z.string().nullable(),
                     status: z.string().nullable(),
-                    userId: z.coerce.number(),
                     createdAt: z.date()
                 }))
              }),
@@ -35,11 +34,13 @@ export const getTasks: FastifyPluginAsyncZod = async (app) =>{
 
    }, async (req, reply) => {
 
-    const user = reqAuthUser(req)
+    const userId = reqAuthUser(req)
 
-    console.log(user)
+    console.log(userId)
 
-    const allTasks = await db.select().from(tasks)
+    const allTasks = await db.select()
+    .from(tasks)
+    .where(eq(tasks.userId, Number(userId.sub)))
 
     if(!allTasks || allTasks.length === 0) {
         return reply.status(404).send({ error: 'Recurso nao encontrado'})

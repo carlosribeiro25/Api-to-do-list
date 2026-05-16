@@ -30,6 +30,5 @@ export const tasks = pgTable("tasks", {
     createdAt: timestamp('created_at').defaultNow().notNull()
 }, (t) => [
     check('tasks_title_min_length', sql`char_length(${t.title}) >= 4`),
-    check('tasks_description_min_length', sql`${t.description} IS NULL OR char_length(${t.description}) >= 4`)
 ])
 
